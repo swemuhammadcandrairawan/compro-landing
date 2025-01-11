@@ -1,105 +1,103 @@
-// 'use client'
+'use client'
 import { useTranslations } from "next-intl";
 
-// import { Input } from "@/components/ui/input";
-// import { Textarea } from "@/components/ui/textarea";
-// import { Button } from "@/components/ui/button";
-// import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
-// import { z } from "zod";
-// import { useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormMessage,
-// } from "@/components/ui/form";
-// import { useState } from "react";
-// import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
-// const contactSchema = z.object({
-//   name: z
-//     .string({ required_error: "Value is required" })
-//     .min(2, "Must be valid name"),
-//   phone_number: z
-//     .string({ required_error: "Phone number is required" })
-//     .regex(/^[+]?\d+(-\d+)*$/, "Invalid phone number"),
-//   email: z
-//     .string({ required_error: "Email is required" })
-//     .email("Invalid email address"),
-//   message: z
-//     .string({ required_error: "Value is required" })
-//     .min(10, "Message min 10 character"),
-// });
+const contactSchema = z.object({
+  name: z
+    .string({ required_error: "Value is required" })
+    .min(2, "Must be valid name"),
+  phone_number: z
+    .string({ required_error: "Phone number is required" })
+    .regex(/^[+]?\d+(-\d+)*$/, "Invalid phone number"),
+  email: z
+    .string({ required_error: "Email is required" })
+    .email("Invalid email address"),
+  message: z
+    .string({ required_error: "Value is required" })
+    .min(10, "Message min 10 character"),
+});
 
 export default function ContactForm({ baseUrl }) {
-   //const { toast } = useToast();
+   const { toast } = useToast();
 
   const t = useTranslations("Footer");
-  // const [isLoading, setLoading] = useState(false);
-  // const form = useForm({
-  //   resolver: zodResolver(contactSchema),
-  //   defaultValues: {
-  //     name: "",
-  //     email: "",
-  //     phone_number: "",
-  //     message: "",
-  //   },
-  // });
+  const [isLoading, setLoading] = useState(false);
+  const form = useForm({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone_number: "",
+      message: "",
+    },
+  });
 
-  // async function onSubmit(value) {
-  //   try {
-  //     setLoading(true);
-  //     const formData = new FormData();
-  //     formData.append("name", value.name);
-  //     formData.append("email", value.email);
-  //     formData.append("phone_number", value.phone_number);
-  //     formData.append("message", value.message);
+  async function onSubmit(value) {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("name", value.name);
+      formData.append("email", value.email);
+      formData.append("phone_number", value.phone_number);
+      formData.append("message", value.message);
 
-  //     const response = await fetch(`${baseUrl}/api/contact-us`, {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-  //     if (!response.ok) throw await response.json();
+      const response = await fetch(`${baseUrl}/api/contact`, {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) throw await response.json();
+      toast({
+        title: 'Success',
+        description: 'Success send message'
+      });
+    } catch (error) {
+      if (error.meta?.messages?.[0]) {
+        toast({
+          title: error.meta.messages[0],
+          variant: "destructive",
+        });
+        return;
+      }
 
-  //     toast({
-  //       title: 'Success',
-  //       description: 'Success send message'
-  //     });
-  //   } catch (error) {
-  //     if (error.meta?.messages?.[0]) {
-  //       toast({
-  //         title: error.meta.messages[0],
-  //         variant: "destructive",
-  //       });
-  //       return;
-  //     }
-
-  //     if (error.meta?.validations) {
-  //       Object.keys(error.meta.validations).forEach((key) => {
-  //         form.setError(key, {
-  //           type: "server",
-  //           message: error.meta.validations[key][0],
-  //         });
-  //       });
-  //       return
-  //     }
-
-  //     toast({
-  //       title: error.message,
-  //       variant: "destructive",
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
+      if (error.meta?.validations) {
+        Object.keys(error.meta.validations).forEach((key) => {
+          form.setError(key, {
+            type: "server",
+            message: error.meta.validations[key][0],
+          });
+        });
+        return
+      }
+      toast({
+        title: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div>
       <h5 className="mb-[30px] block text-secondary">{t("form.title")}</h5>
-      {/* <Form {...form}>
+      <Form {...form}>
         <form
           className="flex flex-col gap-y-6"
           onSubmit={form.handleSubmit(onSubmit)}
@@ -179,7 +177,7 @@ export default function ContactForm({ baseUrl }) {
             </span>
           </Button>
         </form>
-      </Form> */}
+      </Form>
     </div>
   );
 }

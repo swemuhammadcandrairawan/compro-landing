@@ -7,6 +7,7 @@ body {
 }
 
 @layer base {
+
   :root {
     --background: 60, 100%, 98.04%;
     --foreground: 240 10% 3.9%;

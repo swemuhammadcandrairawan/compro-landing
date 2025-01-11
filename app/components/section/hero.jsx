@@ -9,9 +9,9 @@ export default function Hero() {
     <>
       <section className="section-hero bg-black pb-20 pt-[80px]">
         <div className="container text-secondary">
-          <div className="relative z-10 grid items-center justify-center gap-x-[90px] gap-y-16 grid-cols-[1fr_minmax(0,0.55fr)]">
+          <div className="relative z-10 grid items-center justify-center gap-x-[90px] gap-y-16 lg:grid-cols-[1fr_minmax(0,0.55fr)]">
             <div className="text-secondary text-center lg:text-start">
-              <h1>
+              <h1 className="lg:text-[104px]">
                 
                 {t.rich("title", {
                   wrapper: (chunks) => (
@@ -28,9 +28,11 @@ export default function Hero() {
                   ),
                 })}
               </h1>
-              <p className="mb-10 mt-6 text-lg leading-[1.4] md:mb-14 lg-text-[21px]">
+      
+              <p className="mb-10 mt-6 text-lg leading-[1.4] md:mb-14 lg-text:[21px]">
                 {t("description")}
               </p>
+             
               <div className="mb-14 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
                 <div className="flex -space-x-3">
                   <Image

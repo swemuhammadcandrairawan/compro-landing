@@ -75,7 +75,7 @@ export default function Process() {
               className="flex flex-col gap-y-6"
             >
               {processitems.map((item, index) => (
-                <AccordionItem value={`item-${index}`}>
+                <AccordionItem key={`item-accordion-${index}`}>
                   <AccordionTrigger>
                     0{index + 1}/ {item.title}
                   </AccordionTrigger>

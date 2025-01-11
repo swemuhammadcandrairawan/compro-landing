@@ -10,6 +10,7 @@ export default function ServiceCard({ src, title, description }) {
           alt={`icon for ${title}`}
           width="64"
           height="70"
+        
           className="h-[70px] w-auto"
         />
         <h4 className="mb-[15px] mt-[30px]">{title}</h4>

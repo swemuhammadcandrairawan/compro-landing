@@ -136,6 +136,7 @@ export default function About({ settings }) {
           </div>
         </div>
       </div>
+
     </section>
   );
 }

@@ -53,7 +53,7 @@ export default function Service() {
                       <Image
                   className="relative inline-block w-8 md:w-10 lg:w-14"
                   src="/shape-light-lime-5-arms-star.svg"
-                  width={74}
+                  width={77}
                   height={70}
                   alt="icon shape text"
                 />
